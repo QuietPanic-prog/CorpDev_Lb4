@@ -1,0 +1,22 @@
+meta {
+  name: Частично обновить военнослужащего — 200
+  type: http
+  seq: 8
+}
+
+patch {
+  url: http://localhost:8080/api/servicemen/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "position": "Начальник штаба",
+    "apartment": "12"
+  }
+}

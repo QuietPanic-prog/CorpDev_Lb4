@@ -1,0 +1,35 @@
+meta {
+  name: Создать военнослужащего — 201
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8080/api/servicemen
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "lastName": "Иванов",
+    "firstName": "Иван",
+    "patronymic": "Иванович",
+    "nationality": "Русский",
+    "birthDate": "2000-05-20",
+    "position": "Командир взвода",
+    "postalCode": "101000",
+    "country": "Россия",
+    "region": "Москва",
+    "district": "Центральный",
+    "city": "Москва",
+    "street": "Ленина",
+    "house": "1",
+    "apartment": "10",
+    "rank": "Лейтенант"
+  }
+}

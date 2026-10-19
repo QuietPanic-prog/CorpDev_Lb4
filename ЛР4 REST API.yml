@@ -1,0 +1,281 @@
+opencollection: 1.0.0
+info:
+  name: ЛР4 REST API
+items:
+  - info:
+      name: Создать звание — 201
+      type: http
+      seq: 1
+    http:
+      method: POST
+      url: http://localhost:8080/api/ranks
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "name": "Лейтенант"
+          }
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить список званий — 200
+      type: http
+      seq: 2
+    http:
+      method: GET
+      url: http://localhost:8080/api/ranks
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить звание — 200
+      type: http
+      seq: 3
+    http:
+      method: GET
+      url: http://localhost:8080/api/ranks/1
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Создать военнослужащего — 201
+      type: http
+      seq: 4
+    http:
+      method: POST
+      url: http://localhost:8080/api/servicemen
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "lastName": "Иванов",
+            "firstName": "Иван",
+            "patronymic": "Иванович",
+            "nationality": "Русский",
+            "birthDate": "2000-05-20",
+            "position": "Командир взвода",
+            "postalCode": "101000",
+            "country": "Россия",
+            "region": "Москва",
+            "district": "Центральный",
+            "city": "Москва",
+            "street": "Ленина",
+            "house": "1",
+            "apartment": "10",
+            "rank": "Лейтенант"
+          }
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить список военнослужащих — 200
+      type: http
+      seq: 5
+    http:
+      method: GET
+      url: http://localhost:8080/api/servicemen
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить военнослужащего — 200
+      type: http
+      seq: 6
+    http:
+      method: GET
+      url: http://localhost:8080/api/servicemen/1
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Полностью обновить военнослужащего — 200
+      type: http
+      seq: 7
+    http:
+      method: PUT
+      url: http://localhost:8080/api/servicemen/1
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "lastName": "Иванов",
+            "firstName": "Иван",
+            "patronymic": "Иванович",
+            "nationality": "Русский",
+            "birthDate": "2000-05-20",
+            "position": "Командир роты",
+            "postalCode": "101000",
+            "country": "Россия",
+            "region": "Москва",
+            "district": "Центральный",
+            "city": "Москва",
+            "street": "Ленина",
+            "house": "2",
+            "apartment": "10",
+            "rank": "Лейтенант"
+          }
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Частично обновить военнослужащего — 200
+      type: http
+      seq: 8
+    http:
+      method: PATCH
+      url: http://localhost:8080/api/servicemen/1
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "position": "Начальник штаба",
+            "apartment": "12"
+          }
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Изменить название звания — 200
+      type: http
+      seq: 9
+    http:
+      method: PUT
+      url: http://localhost:8080/api/ranks/1
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "name": "Старший лейтенант"
+          }
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить статистику — 200
+      type: http
+      seq: 10
+    http:
+      method: GET
+      url: http://localhost:8080/api/servicemen/statistics
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить статистику по званию — 200
+      type: http
+      seq: 11
+    http:
+      method: GET
+      url: http://localhost:8080/api/servicemen/statistics?rank=%D0%A1%D1%82%D0%B0%D1%80%D1%88%D0%B8%D0%B9%20%D0%BB%D0%B5%D0%B9%D1%82%D0%B5%D0%BD%D0%B0%D0%BD%D1%82
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Удалить используемое звание — 409
+      type: http
+      seq: 12
+    http:
+      method: DELETE
+      url: http://localhost:8080/api/ranks/1
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Получить отсутствующего военнослужащего — 404
+      type: http
+      seq: 13
+    http:
+      method: GET
+      url: http://localhost:8080/api/servicemen/999999
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Удалить военнослужащего — 204
+      type: http
+      seq: 14
+    http:
+      method: DELETE
+      url: http://localhost:8080/api/servicemen/1
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+  - info:
+      name: Удалить звание — 204
+      type: http
+      seq: 15
+    http:
+      method: DELETE
+      url: http://localhost:8080/api/ranks/1
+    settings:
+      encodeUrl: true
+      timeout: 0
+      followRedirects: true
+      maxRedirects: 5
+      forwardAuthorizationHeader: true
+bundled: true
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    exportedAt: '2026-10-19T12:25:51.890Z'
+    exportedUsing: Bruno

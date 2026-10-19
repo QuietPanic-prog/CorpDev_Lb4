@@ -1,0 +1,21 @@
+meta {
+  name: Изменить название звания — 200
+  type: http
+  seq: 9
+}
+
+put {
+  url: http://localhost:8080/api/ranks/1
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Старший лейтенант"
+  }
+}
