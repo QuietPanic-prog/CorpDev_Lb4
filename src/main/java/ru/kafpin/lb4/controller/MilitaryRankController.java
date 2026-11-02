@@ -2,7 +2,7 @@ package ru.kafpin.lb4.controller;
 
 import java.util.List;
 
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,8 @@ public class MilitaryRankController {
         }
         MilitaryRank rank = new MilitaryRank();
         rank.setName(name);
-        return ranks.save(rank);
+        rank.setId(ranks.save(rank));
+        return rank;
     }
 
     @PutMapping("/{id}")
@@ -53,7 +54,8 @@ public class MilitaryRankController {
             throw new IllegalStateException("Звание с таким названием уже существует");
         }
         rank.setName(name);
-        return ranks.save(rank);
+        ranks.update(rank);
+        return rank;
     }
 
     @DeleteMapping("/{id}")
@@ -69,7 +71,8 @@ public class MilitaryRankController {
 
     private MilitaryRank findRank(Long id) {
         return ranks.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Звание с ID " + id + " не найдено"));
+                .orElseThrow(() -> new EmptyResultDataAccessException(
+                        "Звание с ID " + id + " не найдено", 1));
     }
 
     private String checkedName(String name) {
