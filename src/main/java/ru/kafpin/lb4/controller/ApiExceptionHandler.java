@@ -2,7 +2,7 @@ package ru.kafpin.lb4.controller;
 
 import java.util.Map;
 
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(EmptyResultDataAccessException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> notFound(EntityNotFoundException exception) {
+    public Map<String, String> notFound(EmptyResultDataAccessException exception) {
         return Map.of("error", exception.getMessage());
     }
 

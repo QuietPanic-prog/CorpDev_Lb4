@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import ru.kafpin.lb4.repository.MilitaryRankRepository;
-import ru.kafpin.lb4.repository.ServicemanRepository;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -23,8 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {
-        "spring.datasource.url=jdbc:h2:mem:lb4-rest-tests;DB_CLOSE_DELAY=-1",
-        "spring.jpa.hibernate.ddl-auto=create-drop"
+        "spring.datasource.url=jdbc:h2:mem:lb4-rest-tests;DB_CLOSE_DELAY=-1"
 })
 @AutoConfigureMockMvc
 class RestApiTests {
@@ -33,15 +31,12 @@ class RestApiTests {
     private MockMvc mvc;
 
     @Autowired
-    private ServicemanRepository servicemanRepository;
-
-    @Autowired
-    private MilitaryRankRepository militaryRankRepository;
+    private JdbcTemplate jdbcTemplate;
 
     @BeforeEach
     void clearDatabase() {
-        servicemanRepository.deleteAll();
-        militaryRankRepository.deleteAll();
+        jdbcTemplate.update("delete from serviceman");
+        jdbcTemplate.update("delete from military_rank");
     }
 
     @Test

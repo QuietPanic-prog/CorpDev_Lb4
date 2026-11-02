@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +44,8 @@ public class ServicemanController {
     public Serviceman create(@RequestBody ServicemanDTO request) {
         Serviceman serviceman = new Serviceman();
         fillServiceman(serviceman, request);
-        return servicemen.save(serviceman);
+        serviceman.setId(servicemen.save(serviceman));
+        return serviceman;
     }
 
     @PutMapping("/{id}")
@@ -52,7 +53,8 @@ public class ServicemanController {
     public Serviceman update(@PathVariable Long id, @RequestBody ServicemanDTO request) {
         Serviceman serviceman = findServiceman(id);
         fillServiceman(serviceman, request);
-        return servicemen.save(serviceman);
+        servicemen.update(serviceman);
+        return serviceman;
     }
 
     @DeleteMapping("/{id}")
@@ -116,12 +118,14 @@ public class ServicemanController {
         }
         // До проверки всех данных изменяется только DTO, а не сохранённая сущность.
         fillServiceman(serviceman, request);
-        return servicemen.save(serviceman);
+        servicemen.update(serviceman);
+        return serviceman;
     }
 
     private Serviceman findServiceman(Long id) {
         return servicemen.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Военнослужащий с ID " + id + " не найден"));
+                .orElseThrow(() -> new EmptyResultDataAccessException(
+                        "Военнослужащий с ID " + id + " не найден", 1));
     }
 
     private void fillServiceman(Serviceman serviceman, ServicemanDTO request) {
@@ -140,7 +144,8 @@ public class ServicemanController {
             throw new IllegalArgumentException("birthDate должна быть датой в прошлом в формате YYYY-MM-DD");
         }
         MilitaryRank rank = ranks.findByName(request.getRank().trim())
-                .orElseThrow(() -> new EntityNotFoundException("Звание " + request.getRank() + " не найдено"));
+                .orElseThrow(() -> new EmptyResultDataAccessException(
+                        "Звание " + request.getRank() + " не найдено", 1));
 
         serviceman.setLastName(request.getLastName());
         serviceman.setFirstName(request.getFirstName());
