@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Добавление военнослужащего</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body><main>
+<nav><a th:href="@{/servicemen}">Военнослужащие</a><a th:href="@{/ranks}">Звания</a></nav>
+<h1>Добавление военнослужащего</h1>
+<form class="panel" th:action="@{/servicemen}" th:object="${servicemanForm}" method="post">
+<h2>Личные данные</h2>
+<div class="grid">
+<label>Фамилия
+<input type="text" th:field="*{lastName}" maxlength="80" required>
+<span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+</label>
+<label>Имя
+<input type="text" th:field="*{firstName}" maxlength="80" required>
+<span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+</label>
+<label>Отчество
+<input type="text" th:field="*{patronymic}" maxlength="80" required>
+<span class="error" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"></span>
+</label>
+<label>Национальность
+<input type="text" th:field="*{nationality}" maxlength="80" required>
+<span class="error" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+</label>
+<label>Дата рождения
+<input type="date" th:field="*{birthDate}"  required>
+<span class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></span>
+</label>
+<label>Должность
+<input type="text" th:field="*{position}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
+</label>
+<label>Звание
+<select th:field="*{rankId}" required>
+<option value="">Выберите звание</option>
+<option th:each="rank : ${ranks}" th:value="${rank.id}" th:text="${rank.name}"></option>
+</select>
+<span class="error" th:if="${#fields.hasErrors('rankId')}" th:errors="*{rankId}"></span>
+</label>
+</div>
+<h2>Домашний адрес</h2>
+<div class="grid">
+<label>Почтовый индекс
+<input type="text" th:field="*{address.postalCode}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.postalCode')}" th:errors="*{address.postalCode}"></span>
+</label>
+<label>Страна
+<input type="text" th:field="*{address.country}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.country')}" th:errors="*{address.country}"></span>
+</label>
+<label>Область
+<input type="text" th:field="*{address.region}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.region')}" th:errors="*{address.region}"></span>
+</label>
+<label>Район
+<input type="text" th:field="*{address.district}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.district')}" th:errors="*{address.district}"></span>
+</label>
+<label>Город
+<input type="text" th:field="*{address.city}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.city')}" th:errors="*{address.city}"></span>
+</label>
+<label>Улица
+<input type="text" th:field="*{address.street}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.street')}" th:errors="*{address.street}"></span>
+</label>
+<label>Дом
+<input type="text" th:field="*{address.house}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.house')}" th:errors="*{address.house}"></span>
+</label>
+<label>Квартира
+<input type="text" th:field="*{address.apartment}" maxlength="120" required>
+<span class="error" th:if="${#fields.hasErrors('address.apartment')}" th:errors="*{address.apartment}"></span>
+</label>
+</div>
+<div class="actions"><button type="submit">Добавить</button><a th:href="@{/servicemen}">К списку</a></div>
+</form>
+</main></body></html>
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Военнослужащие</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body><main>
+<nav><a th:href="@{/servicemen}">Военнослужащие</a><a th:href="@{/ranks}">Звания</a></nav>
+<h1>Военнослужащие</h1>
+<form class="panel" th:action="@{/servicemen}" th:object="${search}" method="get">
+<h2>Поиск и отбор</h2>
+<p>Можно сочетать фамилию и национальность, город и звание, должность и звание.</p>
+<div class="grid">
+<label>Фамилия
+<input type="text" th:field="*{lastName}" maxlength="120">
+<span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+</label>
+<label>Национальность
+<input type="text" th:field="*{nationality}" maxlength="120">
+<span class="error" th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}"></span>
+</label>
+<label>Город
+<input type="text" th:field="*{city}" maxlength="120">
+<span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+</label>
+<label>Должность
+<input type="text" th:field="*{position}" maxlength="120">
+<span class="error" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
+</label>
+<label>Звание
+<select th:field="*{rankId}" >
+<option value="">Все звания</option>
+<option th:each="rank : ${ranks}" th:value="${rank.id}" th:text="${rank.name}"></option>
+</select>
+<span class="error" th:if="${#fields.hasErrors('rankId')}" th:errors="*{rankId}"></span>
+</label>
+</div>
+<div class="actions"><button type="submit">Найти</button><a th:href="@{/servicemen}">Сбросить</a></div>
+</form>
+<p><a class="button" th:href="@{/servicemen/new}">Добавить военнослужащего</a></p>
+<section>
+<p th:if="${#lists.isEmpty(servicemen)}">Записи не найдены.</p>
+<div class="table-wrap" th:unless="${#lists.isEmpty(servicemen)}">
+<table>
+<thead><tr><th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Национальность</th><th>Дата рождения</th><th>Должность</th><th>Звание</th><th>Домашний адрес</th></tr></thead>
+<tbody><tr th:each="s : ${servicemen}">
+<td th:text="${s.lastName}"></td><td th:text="${s.firstName}"></td><td th:text="${s.patronymic}"></td>
+<td th:text="${s.nationality}"></td><td th:text="${#temporals.format(s.birthDate, 'dd.MM.yyyy')}"></td>
+<td th:text="${s.position}"></td><td th:text="${s.rank.name}"></td>
+<td class="address">
+<div>Индекс: <span th:text="${s.address.postalCode}"></span></div>
+<div>Страна: <span th:text="${s.address.country}"></span></div>
+<div>Область: <span th:text="${s.address.region}"></span></div>
+<div>Район: <span th:text="${s.address.district}"></span></div>
+<div>Город: <span th:text="${s.address.city}"></span></div>
+<div>Улица: <span th:text="${s.address.street}"></span></div>
+<div>Дом: <span th:text="${s.address.house}"></span>; квартира: <span th:text="${s.address.apartment}"></span></div>
+</td>
+</tr></tbody>
+</table></div>
+</section>
+</main></body></html>
+
