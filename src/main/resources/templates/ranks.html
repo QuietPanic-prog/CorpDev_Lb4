@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Звания</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body><main>
+<nav><a th:href="@{/servicemen}">Военнослужащие</a><a th:href="@{/ranks}">Звания</a></nav>
+<h1>Звания</h1>
+<section>
+<p th:if="${#lists.isEmpty(ranks)}">Звания ещё не добавлены.</p>
+<ul><li th:each="rank : ${ranks}" th:text="${rank.name}"></li></ul>
+</section>
+<form class="panel" th:action="@{/ranks}" th:object="${rankForm}" method="post">
+<h2>Новое звание</h2>
+<label>Название
+<input type="text" th:field="*{name}" maxlength="80" required>
+<span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+</label>
+<div class="actions"><button type="submit">Добавить</button></div>
+</form>
+</main></body></html>
+
